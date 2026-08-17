@@ -1,0 +1,33 @@
+Environment Setup
+=================
+
+Python 3.11 is recommended.
+
+Run from the project root:
+
+1. Create the environment
+
+   conda create -n med_afa python=3.11 -y
+   conda activate med_afa
+
+2. Install dependencies
+
+   python -m pip install --upgrade pip
+   pip install torch==2.5.1+cu118 --index-url https://download.pytorch.org/whl/cu118
+   pip install -r requirements.txt
+
+   The CUDA command above requires a compatible NVIDIA driver and installs the
+   GPU-enabled PyTorch build used by the training workflow. Check availability
+   with:
+
+   python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')"
+
+   On managed networks, configure the required proxy and certificate settings
+   for pip before downloading the CUDA wheel. Do not disable certificate
+   validation as a general installation step.
+
+3. Run
+
+   python run/run_Med_AFA.py --smoke --dataset_name DATASET --dataset_csv PATH_TO_CSV --actions_path PATH_TO_ACTIONS_JSON --label_col LABEL_COLUMN --run_id RUN_ID --seed 42
+
+Required inputs are the dataset name, CSV path, action-definition path, and label-column name.
